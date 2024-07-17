@@ -1,8 +1,14 @@
 #include <Arduino.h>
-#include <SPI.h>
+#include <secrets.h>
 #include <ESP8266WiFi.h>
+#include <ESP8266WebServer.h>
+#include <DNSServer.h>
+#include <WiFiManager.h>
 #include <fibonacci_driver.h>
 #include <ntptime.h>
+
+// const char *ssid;
+// const char *passphrase;
 
 unsigned long currentTime1;
 unsigned long timeElapsed1 = 0;
@@ -10,6 +16,10 @@ unsigned long currentTime2;
 unsigned long timeElapsed2 = 0;
 int hours;
 int minutes;
+
+const int resetpin = 1;
+
+WiFiManager wm;
 void setup(void)
 {
 
@@ -17,11 +27,33 @@ void setup(void)
   pinMode(latchPin_CRGB, OUTPUT);
   pinMode(clockPin_CRGB, OUTPUT);
   pinMode(dataPin_CRGB, OUTPUT);
-
+  // wm.resetSettings();
   // put your setup code here, to run once:
   Serial.begin(115200);
+  bool wifistat;
 
-  WiFi.begin(ssid, password);
+  String SSID;
+  String PASS;
+  wifistat = wm.autoConnect("FiboArt Timepiece", "011235813");
+  if (!wifistat)
+  {
+    Serial.println("Failed to connect");
+  }
+
+  else
+  {
+    Serial.println("connected...yeey :)");
+    SSID = wm.getWiFiSSID();
+    PASS = wm.getWiFiPass();
+  }
+
+  char ssid[SSID.length() + 1];
+  char passphrase[PASS.length() + 1];
+
+  strcpy(ssid, SSID.c_str());       //  Convert String to Char array
+  strcpy(passphrase, PASS.c_str()); //  Convert String to Char array
+
+  WiFi.begin(ssid, passphrase);
 
   while (WiFi.status() != WL_CONNECTED)
   {
@@ -34,9 +66,6 @@ void setup(void)
   Serial.println(ssid);
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
-  // // Initialize SPI
-  // SPI.begin();
-  // SPI.setFrequency(1000000); // Set SPI frequency to 1 MHz
 
   // Initialize a NTPClient to get time
   timeClient.begin();
@@ -60,6 +89,12 @@ void loop()
   //   stringComplete = false;
   // }
 
+  if (digitalRead(resetpin) == HIGH)
+  {
+    wm.resetSettings();
+    delay(2000);
+    ESP.reset();
+  }
   currentTime1 = millis();
   if (currentTime1 - timeElapsed1 >= 10000)
   {

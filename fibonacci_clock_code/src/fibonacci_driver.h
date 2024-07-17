@@ -197,7 +197,7 @@ void displayTime(int hour, int minutes)
 
   case 8:
     /* code */
-    light_section(sections::C, {!flag[3] ? colors::red : colors::green});
+    light_section(sections::D, {!flag[3] ? colors::red : colors::green});
     light_section(sections::E, {!flag[4] ? colors::red : colors::green});
     flag[0] = false;
     flag[1] = false;
