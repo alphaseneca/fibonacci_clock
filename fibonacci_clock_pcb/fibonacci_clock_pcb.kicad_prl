@@ -74,7 +74,7 @@
     "ssh_key": ""
   },
   "meta": {
-    "filename": "Kicad files.kicad_prl",
+    "filename": "fibonacci_clock_pcb.kicad_prl",
     "version": 3
   },
   "project": {
