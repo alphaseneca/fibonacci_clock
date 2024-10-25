@@ -18,7 +18,10 @@ Working Image:
 # Fibonacci Clock
 
 A unique clock project that combines **math and electronics** using the Fibonacci sequence to display time with colored segments. Powered by a **Wemos D1 Mini**, it fetches the current time using **NTP**. This repository serves as a **learning journal**, tracking the development process, inspirations, troubleshooting, and future improvements.
-![fibonacci_clock](<images/fibimage%20(3).jpg>)
+
+---
+
+<img src="images/fibimage (3).jpg" width="400"/>
 
 ---
 
@@ -60,7 +63,7 @@ Building this clock has been an exciting adventure. It started as a simple idea 
 
  <!-- Handling **network connectivity** and **color overlaps** provided valuable learning experiences. -->
 
-![Current Design](<images/fibimage%20(1).jpg>)
+<img src="images/fibimage (1).jpg" width="400"/>
 
 Creating the PCB design was also a journey in its own. I started with the prefboard and the main project is still on the prefboard but for the further development and to make the device look clean and more presentable the [PCB design](fibonacci_clock_pcb/fibonacci_clock_pcb.jpg) was created.
 
